@@ -1,4 +1,3 @@
-import Layout from 'components/common/Layout'
 import Review from 'components/review/Review'
 
 import s from './HomeView.module.css'
@@ -15,12 +14,10 @@ const reviews = [
 
 export default function HomeView() {
     return (
-        <Layout>
-            <div className={s.reviews}>
-                {reviews.map(review => (
-                    <Review data={review} key={review.id} />
-                ))}
-            </div>
-        </Layout>
+        <div className={s.reviews}>
+            {reviews.map(review => (
+                <Review data={review} key={review.id} />
+            ))}
+        </div>
     )
 }

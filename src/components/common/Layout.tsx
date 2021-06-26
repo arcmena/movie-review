@@ -10,9 +10,9 @@ interface ILayout {
 
 export default function Layout({ children }: ILayout) {
     return (
-        <main className={s.wrapper}>
+        <div className={s.wrapper}>
             <Header />
-            {children}
-        </main>
+            <main className={s.content}>{children}</main>
+        </div>
     )
 }

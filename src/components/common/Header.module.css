@@ -1,9 +1,41 @@
 .wrapper {
+    padding: var(--spacing-4) 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wrapper h1 {
     font-weight: 500;
     font-size: 2.2rem;
     font-style: italic;
 
     user-select: none;
+}
 
-    padding: var(--spacing-4) 0;
+.wrapper button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+
+    background: none;
+
+    color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 0.4rem;
+
+    padding: 0 var(--spacing-2);
+
+    height: 37px;
+
+    font-size: 1.6rem;
+
+    letter-spacing: 0.13rem;
+}
+
+.wrapper button svg {
+    margin-left: var(--spacing-1);
 }
