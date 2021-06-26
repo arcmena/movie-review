@@ -1,0 +1,9 @@
+.wrapper {
+    font-weight: 500;
+    font-size: 2.2rem;
+    font-style: italic;
+
+    user-select: none;
+
+    padding: var(--spacing-4) 0;
+}

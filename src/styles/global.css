@@ -48,6 +48,16 @@ body,
     /* colors */
     --gray: #c4c4c4;
     --white: #f5f5f5;
-
     --background: #0e101d;
+    --red: #a81a2d;
+
+    --gray-1: #f3f4f6;
+    --gray-2: #e5e7eb;
+    --gray-3: #d1d5db;
+    --gray-4: #9ca3af;
+    --gray-5: #6b7280;
+    --gray-6: #4b5563;
+    --gray-7: #374151;
+    --gray-8: #1f2937;
+    --gray-9: #111827;
 }

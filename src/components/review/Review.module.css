@@ -1,0 +1,35 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 500;
+
+    color: var(--gray-2);
+}
+
+.header h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+
+    margin-top: var(--spacing-2);
+
+    color: var(--gray-4);
+}
+
+.header svg {
+    color: var(--red);
+    cursor: pointer;
+}
+
+.review__opnion {
+    margin-top: var(--spacing-4);
+
+    font-size: 1.6rem;
+    font-weight: 400;
+
+    color: var(--gray-2);
+}
