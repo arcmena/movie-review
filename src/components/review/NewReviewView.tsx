@@ -1,3 +1,12 @@
+import NewReviewForm from './NewReviewForm'
+
+import s from './NewReviewView.module.css'
+
 export default function NewReviewView() {
-    return <div>add</div>
+    return (
+        <>
+            <h1 className={s.title}>Share your review :)</h1>
+            <NewReviewForm />
+        </>
+    )
 }

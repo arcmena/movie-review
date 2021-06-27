@@ -14,14 +14,7 @@ export default function Review({ data: { title, genres, opinion } }: IReview) {
             <div className={s.header}>
                 <div>
                     <h1>{title}</h1>
-                    <h2>
-                        {genres.map((genre, index) => (
-                            <span key={`${genre}-${index}`}>
-                                {index !== 0 ? ', ' : ''}
-                                {genre}
-                            </span>
-                        ))}
-                    </h2>
+                    <h2>{genres}</h2>
                 </div>
                 <CgTrash size={27} />
             </div>

@@ -1,0 +1,38 @@
+.form {
+    margin-top: var(--spacing-8);
+}
+
+.form div:not(:first-child) {
+    margin-top: var(--spacing-4);
+}
+
+.form input,
+textarea {
+    width: 100%;
+    margin-top: var(--spacing-2);
+    padding: var(--spacing-3);
+
+    background-color: var(--gray-2);
+    border: none;
+    border-radius: 0.4rem;
+
+    font-size: 1.6rem;
+    color: var(--gray-7);
+}
+
+.form label {
+    color: var(--gray-2);
+    font-size: 1.6rem;
+}
+
+.form button {
+    margin-top: var(--spacing-6);
+    width: 100%;
+}
+
+.error {
+    margin-top: var(--spacing-2);
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: var(--red);
+}

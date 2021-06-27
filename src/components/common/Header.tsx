@@ -1,6 +1,8 @@
 import { useLocation, useHistory } from 'react-router-dom'
 import { CgArrowLeft, CgMathPlus } from 'react-icons/cg'
 
+import Button from 'components/ui/Button'
+
 import s from './Header.module.css'
 import { APP_URLS } from 'utils/constants'
 
@@ -16,7 +18,7 @@ export default function Header() {
     return (
         <header className={s.wrapper}>
             <h1>movie review</h1>{' '}
-            <button onClick={handleNavigation}>
+            <Button onClick={handleNavigation}>
                 {isAddReview ? (
                     <>
                         Return
@@ -28,7 +30,7 @@ export default function Header() {
                         <CgMathPlus size={22} />
                     </>
                 )}
-            </button>
+            </Button>
         </header>
     )
 }
