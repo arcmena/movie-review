@@ -7,7 +7,18 @@ import Layout from 'components/common/Layout'
 
 import { APP_URLS } from 'utils/constants'
 
+import { useAppDispatch } from 'app/hooks'
+import { useEffect } from 'react'
+import { loadReviews } from 'components/review/reviewReducer'
+
 export default function App() {
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(loadReviews())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <Router>
             <Layout>

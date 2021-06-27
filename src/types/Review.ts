@@ -1,5 +1,5 @@
 export default interface Review {
-    id: number
+    id: string
     title: string
     genres: string
     opinion: string
