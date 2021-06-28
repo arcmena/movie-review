@@ -1,15 +1,15 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import Layout from 'components/common/Layout'
 import HomeView from 'components/home/HomeView'
 import NewReviewView from 'components/review/NewReviewView'
-
-import Layout from 'components/common/Layout'
-
-import { APP_URLS } from 'utils/constants'
+import EditReviewView from 'components/review/EditReviewView'
 
 import { useAppDispatch } from 'app/hooks'
-import { useEffect } from 'react'
 import { loadReviews } from 'components/review/reviewReducer'
+
+import { APP_URLS } from 'utils/constants'
 
 export default function App() {
     const dispatch = useAppDispatch()
@@ -27,6 +27,10 @@ export default function App() {
                     <Route
                         path={APP_URLS.ADD_NEW_REVIEW}
                         component={NewReviewView}
+                    />
+                    <Route
+                        path={`${APP_URLS.EDIT_REVIEW}/:id`}
+                        component={EditReviewView}
                     />
                 </Switch>
             </Layout>

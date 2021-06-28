@@ -7,11 +7,13 @@ import { v4 as uuid } from 'uuid'
 import { store } from 'app/store'
 import App from 'App'
 
+import Review from 'types/Review'
+
 import 'styles/global.css'
 
 new Server({
     models: {
-        review: Model
+        review: Model.extend<Partial<Review>>({})
     },
     seeds(server) {
         server.create('review', {
@@ -28,20 +30,33 @@ new Server({
             opinion:
                 "She's not the first superhero to be affected acutely by emotional pain; everyone knows that quote about great power and great responsibility. Yet for an MCU project, the choice to focus on Wanda's inner life is revolutionary."
         })
+        server.create('review', {
+            id: uuid(),
+            title: "Zack Snyder's Justice League (2021)",
+            genres: 'Action, Adventure',
+            opinion:
+                "Visually stunning and thrillingly dark, the 'Snyder Cut' is an ambitious and admirable cinematic experience - the most impressive superhero film since Nolan's Dark Knight series. While its writing and attempts at humor don't always hit the mark, and the film is stronger in its first 3/4 than its weaker finale, 'Snyder Cut' is overall a satisfying watch that deserves the hype."
+        })
     },
     routes() {
-        this.namespace = 'api'
+        this.namespace = 'api/reviews'
 
-        this.get('/reviews', schema => {
+        this.get('/', schema => {
             return schema.db.reviews
         })
-        this.post('/reviews', (schema, request) => {
-            const attrs = JSON.parse(request.requestBody)
+        this.post('/', (schema, request) => {
+            const attrs: Review = JSON.parse(request.requestBody)
             schema.db.reviews.insert(attrs)
             return schema.db.reviews
         })
-        this.delete('/reviews', (schema, request) => {
-            const id = JSON.parse(request.requestBody)
+        this.patch('/:id', (schema, request) => {
+            const id: string = String(request.params.id)
+            const updatedReview: Review = JSON.parse(request.requestBody)
+            schema.db.reviews.update(id, updatedReview)
+            return schema.db.reviews
+        })
+        this.delete('/:id', (schema, request) => {
+            const id: string = String(request.params.id)
             schema.db.reviews.remove(id)
             return schema.db.reviews
         })

@@ -3,23 +3,24 @@ import { CgArrowLeft, CgMathPlus } from 'react-icons/cg'
 
 import Button from 'components/ui/Button'
 
-import s from './Header.module.css'
 import { APP_URLS } from 'utils/constants'
+
+import s from './Header.module.css'
 
 export default function Header() {
     const { pathname } = useLocation()
     const { push } = useHistory()
 
-    const isAddReview: boolean = pathname === APP_URLS.ADD_NEW_REVIEW
+    const isHome: boolean = pathname === APP_URLS.HOME
 
     const handleNavigation = (): void =>
-        isAddReview ? push(APP_URLS.HOME) : push(APP_URLS.ADD_NEW_REVIEW)
+        !isHome ? push(APP_URLS.HOME) : push(APP_URLS.ADD_NEW_REVIEW)
 
     return (
         <header className={s.wrapper}>
             <h1>movie review</h1>{' '}
             <Button onClick={handleNavigation}>
-                {isAddReview ? (
+                {!isHome ? (
                     <>
                         Return
                         <CgArrowLeft size={22} />

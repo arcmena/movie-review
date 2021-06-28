@@ -23,9 +23,17 @@
     color: var(--gray-4);
 }
 
-.header svg {
+.actions {
+    display: flex;
+}
+
+.actions svg {
     color: var(--red);
     cursor: pointer;
+}
+
+.actions svg:last-child {
+    margin-left: var(--spacing-2);
 }
 
 .review__opnion {
