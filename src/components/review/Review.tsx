@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { CgTrash } from 'react-icons/cg'
 import { BiPencil } from 'react-icons/bi'
 
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'redux/hooks'
 import { removeReview } from './reviewReducer'
 
 import ReviewType from 'types/Review'

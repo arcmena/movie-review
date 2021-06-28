@@ -1,4 +1,4 @@
-import { useAppSelector } from 'app/hooks'
+import { useAppSelector } from 'redux/hooks'
 
 import Review from 'components/review/Review'
 import Spinner from 'components/ui/Spinner'

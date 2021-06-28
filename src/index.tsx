@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { Server, Model } from 'miragejs'
 import { v4 as uuid } from 'uuid'
 
-import { store } from 'app/store'
+import { store } from 'redux/store'
 import App from 'App'
 
 import Review from 'types/Review'

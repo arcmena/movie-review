@@ -6,7 +6,7 @@ import HomeView from 'components/home/HomeView'
 import NewReviewView from 'components/review/NewReviewView'
 import EditReviewView from 'components/review/EditReviewView'
 
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'redux/hooks'
 import { loadReviews } from 'components/review/reviewReducer'
 
 import { APP_URLS } from 'utils/constants'

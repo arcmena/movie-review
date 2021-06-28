@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid'
 
 import ReviewForm from './ReviewForm'
 
-import { useAppDispatch } from 'app/hooks'
+import { useAppDispatch } from 'redux/hooks'
 import { addReview } from './reviewReducer'
 
 import { APP_URLS } from 'utils/constants'

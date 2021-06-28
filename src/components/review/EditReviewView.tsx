@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import ReviewForm from './ReviewForm'
 
-import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import {
     getReviewInfo,
     resetCurrentEdit,
