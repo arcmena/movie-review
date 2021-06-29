@@ -19,7 +19,7 @@ const TestProps = () => {
     )
 }
 
-it('function properly passing props', () => {
+test('function properly passing props', () => {
     const { getByText, queryByText } = render(<TestProps />)
 
     expect(queryByText(/Click to increase: 0/)).toBeDefined()
