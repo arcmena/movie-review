@@ -6,7 +6,10 @@ import {
     fireEvent
 } from 'test-utils'
 
+import Review from 'types/Review'
+
 import { makeServer } from 'server'
+
 let server: any
 
 const REVIEWS_NOT_FOUND = 'No reviews found :( Add one!'
@@ -19,68 +22,125 @@ afterEach(() => {
     server.shutdown()
 })
 
-test('renders without crashing', async () => {
-    const { getByTestId, getByText } = render(<App />)
+describe('<HomeView />', () => {
+    test('renders without crashing', async () => {
+        const { getByTestId, getByText } = render(<App />)
 
-    expect(getByText(/movie review/i)).toBeInTheDocument()
-    expect(getByTestId('spinner')).toBeInTheDocument()
+        expect(getByText(/movie review/i)).toBeInTheDocument()
+        expect(getByTestId('spinner')).toBeInTheDocument()
+    })
+
+    test('render a mocked review', async () => {
+        server.create('review', exampleReview)
+
+        const { getByText, getByTestId } = render(<App />)
+
+        await waitForElementToBeRemoved(getByTestId('spinner'))
+
+        // Expect all data to be displayed
+        expect(getByText(exampleReview.title)).toBeInTheDocument()
+        expect(getByText(exampleReview.genres)).toBeInTheDocument()
+        expect(getByText(exampleReview.opinion)).toBeInTheDocument()
+    })
+
+    test('remove a mocked review', async () => {
+        const { getByText, getByTestId } = render(<App />)
+
+        expect(getByText(exampleReview.title)).toBeInTheDocument()
+
+        fireEvent.click(getByTestId('button-remove_review'))
+
+        await waitForElementToBeRemoved(getByText(exampleReview.title))
+
+        expect(getByText(REVIEWS_NOT_FOUND)).toBeInTheDocument()
+    })
 })
 
-test('render a mocked review', async () => {
-    server.create('review', exampleReview)
+describe('<EditReviewView />', () => {
+    test('edit a mocked review', async () => {
+        const newMovieTitle = 'Noop Nolan'
 
-    const { getByText, getByTestId } = render(<App />)
+        server.create('review', exampleReview)
 
-    await waitForElementToBeRemoved(getByTestId('spinner'))
+        const { getByText, getByTestId, getByPlaceholderText } = render(<App />)
 
-    // Expect all data to be displayed
-    expect(getByText(exampleReview.title)).toBeInTheDocument()
-    expect(getByText(exampleReview.genres)).toBeInTheDocument()
-    expect(getByText(exampleReview.opinion)).toBeInTheDocument()
+        await waitForElementToBeRemoved(getByText(REVIEWS_NOT_FOUND))
+
+        fireEvent.click(getByTestId('button-edit_review'))
+
+        expect(getByText('Edit your review :)')).toBeInTheDocument()
+
+        const titleInput = getByPlaceholderText(
+            'Movie title'
+        ) as HTMLInputElement
+        const genresInput = getByPlaceholderText(
+            'Movie Genres'
+        ) as HTMLInputElement
+        const opinionInput = getByPlaceholderText(
+            'Your opinion'
+        ) as HTMLInputElement
+
+        expect(titleInput.value).toBe(exampleReview.title)
+        expect(genresInput.value).toBe(exampleReview.genres)
+        expect(opinionInput.value).toBe(exampleReview.opinion)
+
+        fireEvent.change(titleInput, { target: { value: newMovieTitle } })
+
+        expect(titleInput.value).toBe(newMovieTitle)
+
+        fireEvent.click(getByTestId('button-submit_review_form'))
+
+        await waitForElementToBeRemoved(getByText('Edit your review :)'))
+
+        expect(getByText(newMovieTitle)).toBeInTheDocument()
+    })
 })
 
-test('remove a mocked review', async () => {
-    const { getByText, getByTestId } = render(<App />)
+describe('<NewReviewView />', () => {
+    test('create new review', async () => {
+        const { getByText, getByPlaceholderText, debug, getByTestId } = render(
+            <App />
+        )
 
-    expect(getByText(exampleReview.title)).toBeInTheDocument()
+        fireEvent.click(getByText('Add review'))
 
-    fireEvent.click(getByTestId('button-remove_review'))
+        const titleInput = getByPlaceholderText(
+            'Movie title'
+        ) as HTMLInputElement
+        const genresInput = getByPlaceholderText(
+            'Movie Genres'
+        ) as HTMLInputElement
+        const opinionInput = getByPlaceholderText(
+            'Your opinion'
+        ) as HTMLInputElement
 
-    await waitForElementToBeRemoved(getByText(exampleReview.title))
+        const newExampleReview: Review = {
+            id: 'foobar',
+            title: 'Foo',
+            genres: 'Bar',
+            opinion: 'lorem'
+        }
 
-    expect(getByText(REVIEWS_NOT_FOUND)).toBeInTheDocument()
-})
+        fireEvent.change(titleInput, {
+            target: { value: newExampleReview.title }
+        })
+        fireEvent.change(genresInput, {
+            target: { value: newExampleReview.genres }
+        })
+        fireEvent.change(opinionInput, {
+            target: { value: newExampleReview.opinion }
+        })
 
-test('edit a mocked review', async () => {
-    const newMovieTitle = 'Noop Nolan'
+        expect(titleInput.value).toBe(newExampleReview.title)
+        expect(genresInput.value).toBe(newExampleReview.genres)
+        expect(opinionInput.value).toBe(newExampleReview.opinion)
 
-    server.create('review', exampleReview)
+        fireEvent.click(getByTestId('button-submit_review_form'))
 
-    const { getByText, getByTestId, getByPlaceholderText } = render(<App />)
+        await waitForElementToBeRemoved(getByText('Share your review :)'))
 
-    await waitForElementToBeRemoved(getByText(REVIEWS_NOT_FOUND))
-
-    fireEvent.click(getByTestId('button-edit_review'))
-
-    expect(getByText('Edit your review :)')).toBeInTheDocument()
-
-    const titleInput = getByPlaceholderText(/Movie title/) as HTMLInputElement
-    const genresInput = getByPlaceholderText(/Movie Genres/) as HTMLInputElement
-    const opinionInput = getByPlaceholderText(
-        /Your opinion/
-    ) as HTMLInputElement
-
-    expect(titleInput.value).toBe(exampleReview.title)
-    expect(genresInput.value).toBe(exampleReview.genres)
-    expect(opinionInput.value).toBe(exampleReview.opinion)
-
-    fireEvent.change(titleInput, { target: { value: newMovieTitle } })
-
-    expect(titleInput.value).toBe(newMovieTitle)
-
-    fireEvent.click(getByTestId('button-submit_review_form'))
-
-    await waitForElementToBeRemoved(getByText('Edit your review :)'))
-
-    expect(getByText(newMovieTitle)).toBeInTheDocument()
+        expect(getByText(newExampleReview.title)).toBeInTheDocument()
+        expect(getByText(newExampleReview.genres)).toBeInTheDocument()
+        expect(getByText(newExampleReview.opinion)).toBeInTheDocument()
+    })
 })
