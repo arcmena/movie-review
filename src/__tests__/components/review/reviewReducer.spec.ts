@@ -39,6 +39,6 @@ test('handle setCurrentEdit', () => {
 test('handle resetCurrentEdit', () => {
     const actual = reviewReducer(partialInitialState, resetCurrentEdit())
 
-    expect(actual.currentEdit).not.toBe(undefined)
-    expect(actual.currentEdit).toBe(undefined)
+    expect(actual.currentEdit).not.toBe(exampleReview)
+    expect(actual.currentEdit).toBeUndefined()
 })
