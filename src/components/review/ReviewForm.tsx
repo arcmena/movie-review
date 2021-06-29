@@ -65,7 +65,9 @@ export default function ReviewForm({
                 )}
             </div>
 
-            <Button type="submit">{buttonTitle}</Button>
+            <Button type="submit" data-testid="button-submit_review_form">
+                {buttonTitle}
+            </Button>
         </form>
     )
 }

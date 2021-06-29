@@ -1,20 +1,23 @@
 import { render, RenderOptions, RenderResult } from '@testing-library/react'
-import { ReactNode, FC } from 'react'
-import { ReactElement } from 'react'
+import { ReactNode, FC, ReactElement } from 'react'
 import { Provider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { BrowserRouter } from 'react-router-dom'
 
 import { store } from 'redux/store'
+import reviewReducer from 'components/review/reviewReducer'
 
 import Review from 'types/Review'
 
 interface IProvider {
-    chidlren?: ReactNode
+    children?: ReactNode
 }
 
 const withProviders: FC<IProvider> = ({ children }) => (
     <Provider store={store}>{children}</Provider>
 )
+
+// Custom renders
 
 const customRender = (
     ui: ReactElement,
@@ -33,14 +36,37 @@ const renderWithRouterStore = (ui: ReactElement, { route = '/' } = {}) => {
     return render(ui, { wrapper: providerStore })
 }
 
+const renderWithReducer = (
+    ui: ReactElement,
+    {
+        // @ts-ignore
+        preloadedState,
+        store = configureStore({
+            reducer: { user: reviewReducer },
+            preloadedState
+        }),
+        ...renderOptions
+    } = {}
+) => {
+    function Wrapper({ children }: IProvider) {
+        return <Provider store={store}>{children}</Provider>
+    }
+    return render(ui, { wrapper: Wrapper, ...renderOptions })
+}
+
 const exampleReview: Review = {
     id: 'foo_bar',
-    title: 'Blade Runner 2049 (2017)',
-    genres: 'Sci-fi, Thriller',
+    title: 'John Doe and the Goonies',
+    genres: 'Thriller',
     opinion:
-        "Deliberate in its pacing and world-building, the follow-up to Ridley Scott's dystopian vision of Los Angeles usesbreathtaking cinematography, impeccable production, and agripping story to make our second visit even more revelatory than the first."
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, consequatur! Ullam atque enim veniam accusamus velit repellat animi nisi assumenda.'
 }
 
 export * from '@testing-library/react'
 
-export { customRender as render, renderWithRouterStore, exampleReview }
+export {
+    customRender as render,
+    renderWithRouterStore,
+    renderWithReducer,
+    exampleReview
+}

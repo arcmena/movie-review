@@ -35,8 +35,16 @@ export default function Review({
                     <h2>{genres}</h2>
                 </div>
                 <div className={s.actions}>
-                    <BiPencil size={27} onClick={handleEdit} />
-                    <CgTrash size={27} onClick={handleDelete} />
+                    <BiPencil
+                        size={27}
+                        onClick={handleEdit}
+                        data-testid="button-edit_review"
+                    />
+                    <CgTrash
+                        size={27}
+                        onClick={handleDelete}
+                        data-testid="button-remove_review"
+                    />
                 </div>
             </div>
 

@@ -1,8 +1,86 @@
 import App from 'App'
-import { render } from 'test-utils'
+import {
+    waitForElementToBeRemoved,
+    render,
+    exampleReview,
+    fireEvent
+} from 'test-utils'
 
-test('renders without crashing', () => {
-    const { getByText } = render(<App />)
+import { makeServer } from 'server'
+let server: any
+
+const REVIEWS_NOT_FOUND = 'No reviews found :( Add one!'
+
+beforeEach(() => {
+    server = makeServer()
+})
+
+afterEach(() => {
+    server.shutdown()
+})
+
+test('renders without crashing', async () => {
+    const { getByTestId, getByText } = render(<App />)
 
     expect(getByText(/movie review/i)).toBeInTheDocument()
+    expect(getByTestId('spinner')).toBeInTheDocument()
+})
+
+test('render a mocked review', async () => {
+    server.create('review', exampleReview)
+
+    const { getByText, getByTestId } = render(<App />)
+
+    await waitForElementToBeRemoved(getByTestId('spinner'))
+
+    // Expect all data to be displayed
+    expect(getByText(exampleReview.title)).toBeInTheDocument()
+    expect(getByText(exampleReview.genres)).toBeInTheDocument()
+    expect(getByText(exampleReview.opinion)).toBeInTheDocument()
+})
+
+test('remove a mocked review', async () => {
+    const { getByText, getByTestId } = render(<App />)
+
+    expect(getByText(exampleReview.title)).toBeInTheDocument()
+
+    fireEvent.click(getByTestId('button-remove_review'))
+
+    await waitForElementToBeRemoved(getByText(exampleReview.title))
+
+    expect(getByText(REVIEWS_NOT_FOUND)).toBeInTheDocument()
+})
+
+test('edit a mocked review', async () => {
+    const newMovieTitle = 'Noop Nolan'
+
+    server.create('review', exampleReview)
+
+    const { getByText, getByTestId, getByPlaceholderText } = render(<App />)
+
+    await waitForElementToBeRemoved(getByText(REVIEWS_NOT_FOUND))
+
+    fireEvent.click(getByTestId('button-edit_review'))
+
+    expect(getByText('Edit your review :)')).toBeInTheDocument()
+
+    const titleInput = getByPlaceholderText(/Movie title/) as HTMLInputElement
+    const genresInput = getByPlaceholderText(/Movie Genres/) as HTMLInputElement
+    const opinionInput = getByPlaceholderText(
+        /Your opinion/
+    ) as HTMLInputElement
+
+    expect(titleInput.value).toBe(exampleReview.title)
+    expect(genresInput.value).toBe(exampleReview.genres)
+    expect(opinionInput.value).toBe(exampleReview.opinion)
+
+    fireEvent.change(titleInput, { target: { value: newMovieTitle } })
+
+    expect(titleInput.value).toBe(newMovieTitle)
+
+    fireEvent.click(getByTestId('button-submit_review_form'))
+
+    await waitForElementToBeRemoved(getByText('Edit your review :)'))
+
+    expect(getByText(newMovieTitle)).toBeInTheDocument()
 })
