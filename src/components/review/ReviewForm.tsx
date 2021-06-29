@@ -35,7 +35,9 @@ export default function ReviewForm({
                     />
                 </label>
                 {errors.title && (
-                    <p className={s.error}>This field is required</p>
+                    <p className={s.error} data-testid="error_message">
+                        This field is required
+                    </p>
                 )}
             </div>
             <div>
@@ -48,7 +50,9 @@ export default function ReviewForm({
                     />
                 </label>
                 {errors.genres && (
-                    <p className={s.error}>This field is required</p>
+                    <p className={s.error} data-testid="error_message">
+                        This field is required
+                    </p>
                 )}
             </div>
             <div>
@@ -61,7 +65,9 @@ export default function ReviewForm({
                     />
                 </label>
                 {errors.opinion && (
-                    <p className={s.error}>This field is required</p>
+                    <p className={s.error} data-testid="error_message">
+                        This field is required
+                    </p>
                 )}
             </div>
 
