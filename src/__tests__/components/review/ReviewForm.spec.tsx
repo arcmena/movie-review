@@ -1,5 +1,6 @@
-import ReviewForm from 'components/review/ReviewForm'
 import { act } from 'react-dom/test-utils'
+
+import ReviewForm from 'components/review/ReviewForm'
 
 import { exampleReview, render, fireEvent } from 'test-utils'
 
