@@ -98,9 +98,7 @@ describe('<EditReviewView />', () => {
 
 describe('<NewReviewView />', () => {
     test('create new review', async () => {
-        const { getByText, getByPlaceholderText, debug, getByTestId } = render(
-            <App />
-        )
+        const { getByText, getByPlaceholderText, getByTestId } = render(<App />)
 
         fireEvent.click(getByText('Add review'))
 
