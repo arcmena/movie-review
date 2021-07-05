@@ -2,6 +2,8 @@
 
 A movie review app. [Try it!](https://movie-review-delta.vercel.app/)
 
+You should be able to: Create, read, update and delete a review!
+
 ### Technologies
 
 - React
